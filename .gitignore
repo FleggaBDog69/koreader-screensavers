@@ -1,0 +1,26 @@
+# Python virtualenv (recreate with setup_subject.sh)
+.venv/
+
+# U2Net model — 176MB, download via setup_subject.sh (not committed)
+models/
+
+# Generated output + your personal source photos (keep these private!)
+screensavers/
+previews/
+*.png
+*.jpg
+*.jpeg
+*.heic
+*.HEIC
+*.tif
+*.tiff
+*.webp
+
+# OS / Python cruft
+.DS_Store
+__pycache__/
+*.pyc
+
+# ...but DO keep the README demo image (synthetic, no personal data)
+!docs/
+!docs/styles.png

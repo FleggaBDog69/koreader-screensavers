@@ -1,0 +1,5 @@
+# Only needed for `subject` mode (ML cutout). The other styles need nothing but
+# ImageMagick. Install into .venv via setup_subject.sh, or: pip install -r requirements.txt
+onnxruntime
+numpy
+pillow
