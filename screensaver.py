@@ -244,8 +244,9 @@ def flow_kindle_help():
         "Copy screensavers/*.png into  koreader/screensavers/  on the device.",
         "KOReader ▸ ⚙ ▸ Screen ▸ Sleep screen ▸ set the wallpaper folder",
         "   to that screensavers/ folder.",
-        "Sleep screen ▸ Background ▸ 'Leave screen unchanged'  ← the key step;",
-        "   that's what lets the book text show through the transparent areas.",
+        "Sleep screen ▸ 'Border fill, rotation and fit' ▸ set Fill to 'No fill'",
+        "   ← the key step; with no fill KOReader doesn't repaint the page, so",
+        "   the book text shows through the transparent areas.",
         "Optional: 'Random image' so it rotates through them.",
     ]
     for s in steps:

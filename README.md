@@ -94,9 +94,14 @@ around the same engine for mac/Linux muscle memory.)
 1. Copy `screensavers/*.png` into `koreader/screensavers/` on the device.
 2. KOReader ▸ ⚙ ▸ **Screen ▸ Sleep screen** ▸ set the wallpaper folder to that
    folder.
-3. **Sleep screen ▸ Background ▸ "Leave screen unchanged"** — the key step; this
-   is what lets the book text show through the transparent areas.
+3. **Sleep screen ▸ "Border fill, rotation and fit" ▸ set Fill to "No fill"** —
+   the key step. With no fill, KOReader doesn't repaint a background behind the
+   wallpaper, so the last book page stays put and the text shows through the
+   transparent areas.
 4. Optional: "Random image" to rotate through them.
+
+> The transparency trick only works with **"No fill"** — any other fill paints a
+> solid background and you'll just see the opaque image on white.
 
 Default geometry targets an older Paperwhite (**1072×1448**). Change `W`/`H` at
 the top of `make_screensaver.sh` for other models.
