@@ -13,6 +13,21 @@ offline.
 
 ![styles](docs/styles.png)
 
+## Quickstart
+
+1. Click the green **Code ▸ Download ZIP** above (or `git clone` this repo), and
+   unzip it.
+2. Install **[Python 3](https://python.org)** and
+   **[ImageMagick](https://imagemagick.org)** (tick *"Add to PATH"* in the Windows
+   installer).
+3. Launch the studio: double-click **`screensaver.bat`** (Windows) or
+   **`screensaver.command`** (macOS) — or run `python screensaver.py`.
+4. Drag in a photo, pick a style, get an instant preview. Then see
+   [Putting them on your reader](#putting-them-on-your-reader).
+
+That's it for `bold`/`veil`/`skyline`/`full`. The `subject` cutout needs a
+one-time `setup_subject` (see [Requirements](#requirements)).
+
 ## Why
 
 E-ink screensavers are usually full, opaque images. The fun trick KOReader
