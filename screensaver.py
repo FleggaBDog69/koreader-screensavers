@@ -33,9 +33,10 @@ def open_file(path):
         print(f"  (couldn't open {path}: {e})")
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SCRIPT = os.path.join(HERE, "make_screensaver.sh")
-OUT = os.path.join(HERE, "screensavers")
-PREVIEWS = os.path.join(HERE, "previews")
+import generate  # pure-Python engine (no bash) — same on Windows/Mac/Linux
+
+OUT = generate.OUTDIR
+PREVIEWS = generate.PREVDIR
 
 # ANSI colours (mirrors ServerHub)
 BOLD = "\033[1m"; DIM = "\033[2m"; RESET = "\033[0m"
@@ -81,11 +82,11 @@ def header(title, meta=""):
 
 
 def have_magick():
-    return shutil.which("magick") is not None
+    return generate.have_magick()
 
 
 def have_subject():
-    return os.access(os.path.join(HERE, ".venv", "bin", "python"), os.X_OK)
+    return generate.venv_python() is not None
 
 
 def clean_path(raw):
@@ -120,19 +121,18 @@ def list_outputs():
 # ---------------------------------------------------------------------------
 
 def run_generate(src, style, name, env_extra):
-    env = dict(os.environ)
-    env.update(env_extra)
-    args = ["bash", SCRIPT, src, style]
-    if name:
-        args.append(name)
+    kwargs = {}
+    if "CONTRAST" in env_extra:
+        kwargs["contrast"] = env_extra["CONTRAST"]
+    if "VEIL" in env_extra and str(env_extra["VEIL"]).isdigit():
+        kwargs["veil"] = int(env_extra["VEIL"])
     print(f"\n  {CYAN}Generating {style} → {name or os.path.basename(src)}...{RESET}\n")
     try:
-        subprocess.run(args, env=env, cwd=HERE, check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"\n  {RED}Generation failed (exit {e.returncode}).{RESET}")
+        generate.generate(src, style, name or None, **kwargs)
+    except Exception as e:
+        print(f"\n  {RED}Generation failed: {e}{RESET}")
         return None
-    out = name or f"{os.path.splitext(os.path.basename(src))[0]}_{style}"
-    return out
+    return name or f"{os.path.splitext(os.path.basename(src))[0]}_{style}"
 
 
 def choose_style():
@@ -240,7 +240,7 @@ def flow_kindle_help():
     clear()
     header("Load onto the Kindle")
     steps = [
-        "Connect the Kindle by USB (or use your WiFi sync).",
+        "Connect the device by USB.",
         "Copy screensavers/*.png into  koreader/screensavers/  on the device.",
         "KOReader ▸ ⚙ ▸ Screen ▸ Sleep screen ▸ set the wallpaper folder",
         "   to that screensavers/ folder.",

@@ -36,10 +36,16 @@ survives. `veil` and `skyline` are the nicest compromise for colourful skies.
 
 ## Requirements
 
-- **[ImageMagick 7](https://imagemagick.org)** (`magick` on your PATH) — that's
-  it for `bold`/`veil`/`skyline`/`full`.
-- For `subject` mode only: Python 3.10–3.13 + the U2Net model. Run
-  `./setup_subject.sh` once (creates a `.venv`, downloads the ~176MB model).
+Just two things, on **Windows, macOS or Linux** alike:
+
+- **[Python 3](https://python.org)** (3.8+) — runs the generator and the UI.
+- **[ImageMagick 7](https://imagemagick.org)** (`magick` on your PATH) — does the
+  image work.
+
+That's everything for `bold`/`veil`/`skyline`/`full`. No bash, no WSL, no
+internet, no account. The `subject` cutout additionally needs a one-time setup
+(`setup_subject.sh`, or `setup_subject.bat` on Windows) that creates a local
+`.venv` and downloads the ~176MB U2Net model.
 
 ## Usage
 
@@ -52,23 +58,36 @@ python3 screensaver.py
 Drag a photo into the window, pick a style, get an instant preview. The UI also
 browses what you've made and shows the exact KOReader settings to use.
 
-On macOS you can double-click `screensaver.command` instead.
+To launch by double-click instead of the command line: **`screensaver.command`**
+on macOS, **`screensaver.bat`** on Windows.
 
 ### One-shot CLI
 
 ```bash
-./make_screensaver.sh PHOTO [style] [out_name]
+python generate.py PHOTO [style] [out_name]
 
-./make_screensaver.sh ~/Pictures/cliff.heic skyline cliff
-CONTRAST=max ./make_screensaver.sh ~/Pictures/trail.jpg bold
-VEIL=70     ./make_screensaver.sh ~/Pictures/sunset.jpg veil
+python generate.py cliff.heic skyline cliff
+```
+
+With the optional knobs as environment variables:
+
+```bash
+# macOS / Linux
+CONTRAST=max python generate.py trail.jpg bold
+VEIL=70      python generate.py sunset.jpg veil
+```
+```bat
+REM Windows
+set CONTRAST=max && python generate.py trail.jpg bold
+set VEIL=70      && python generate.py sunset.jpg veil
 ```
 
 Outputs land in `screensavers/<name>.png` (copy to the device) and a
 `previews/<name>_preview.png` showing it over mock book text.
 
 Knobs: `CONTRAST=med|high|max` (bold), `VEIL=NN` opacity (veil/skyline),
-`SKY=lo,hi` skyline handoff band.
+`SKY=lo,hi` skyline handoff band. (`make_screensaver.sh` is a thin shell wrapper
+around the same engine for mac/Linux muscle memory.)
 
 ## Putting them on your reader
 
@@ -84,10 +103,15 @@ the top of `make_screensaver.sh` for other models.
 
 ## Platform notes
 
-- **macOS / Linux**: works directly (needs `bash` + `magick`; on Linux the
-  preview falls back to DejaVu/Liberation serif fonts).
-- **Windows**: run it under **WSL** or **Git Bash** — `make_screensaver.sh` is a
-  bash script. The Python UI itself is cross-platform.
+Fully cross-platform — the generator is pure Python driving ImageMagick, so
+there's no bash dependency.
+
+- **Windows**: install [Python](https://python.org) and
+  [ImageMagick](https://imagemagick.org/script/download.php#windows) (tick "Add
+  to PATH" in its installer), then run `python screensaver.py` or double-click
+  `screensaver.bat`. No WSL needed.
+- **macOS / Linux**: `python3 screensaver.py`. On Linux the preview falls back to
+  DejaVu/Liberation serif fonts if Georgia isn't present.
 
 ## How `subject` works
 
