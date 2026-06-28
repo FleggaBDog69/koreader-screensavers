@@ -28,6 +28,10 @@ offline.
 That's it for `bold`/`veil`/`skyline`/`full`. The `subject` cutout needs a
 one-time `setup_subject` (see [Requirements](#requirements)).
 
+> **Missing Python or ImageMagick?** The launchers help: if Python is missing
+> they offer to install it (winget on Windows, Homebrew on macOS), and if
+> ImageMagick is missing the studio offers a one-key install on first run.
+
 ## Why
 
 E-ink screensavers are usually full, opaque images. The fun trick KOReader

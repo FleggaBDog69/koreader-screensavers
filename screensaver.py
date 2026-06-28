@@ -89,6 +89,41 @@ def have_subject():
     return generate.venv_python() is not None
 
 
+def install_magick():
+    """Offer a one-key ImageMagick install via the platform package manager.
+    Returns True if it's available afterwards in THIS session."""
+    if IS_WIN:
+        if shutil.which("winget") is None:
+            print(f"  Install ImageMagick from "
+                  f"https://imagemagick.org/script/download.php#windows")
+            print(f"  (tick \"Add to PATH\" in the installer).")
+            return False
+        cmd, mgr = ["winget", "install", "-e", "--id",
+                    "ImageMagick.ImageMagick"], "winget"
+    elif IS_MAC:
+        if shutil.which("brew") is None:
+            print(f"  {YELLOW}Homebrew isn't installed.{RESET} Get it at "
+                  f"https://brew.sh, then run:  brew install imagemagick")
+            return False
+        cmd, mgr = ["brew", "install", "imagemagick"], "Homebrew"
+    else:
+        print(f"  Install ImageMagick with your package manager, e.g.:")
+        print(f"    sudo apt install imagemagick   /   "
+              f"sudo dnf install ImageMagick")
+        return False
+
+    if not ask(f"Install ImageMagick now with {mgr}? y/n", "y") \
+            .lower().startswith("y"):
+        return False
+    print(f"\n  {CYAN}Installing ImageMagick via {mgr}...{RESET}\n")
+    try:
+        subprocess.run(cmd, check=True)
+    except Exception as e:
+        print(f"\n  {RED}Install failed: {e}{RESET}")
+        return False
+    return have_magick()
+
+
 def clean_path(raw):
     """Normalise a pasted/dragged path: strip quotes, unescape Terminal drag."""
     s = raw.strip()
@@ -260,8 +295,16 @@ def flow_kindle_help():
 def main_menu():
     if not have_magick():
         clear()
-        print(f"  {RED}ImageMagick not found.{RESET} Install it with:  brew install imagemagick")
-        sys.exit(1)
+        header("ImageMagick needed")
+        print(f"  {RED}ImageMagick isn't installed{RESET} — it does all the "
+              f"image work.\n")
+        if not install_magick():
+            print(f"\n  Re-open the studio once it's installed.")
+            sys.exit(1)
+        if not have_magick():
+            print(f"\n  {GREEN}Installed.{RESET} Close and re-open the studio "
+                  f"so it picks up ImageMagick.")
+            sys.exit(0)
     while True:
         clear()
         n = len(list_outputs())
