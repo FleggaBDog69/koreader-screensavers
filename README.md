@@ -15,30 +15,35 @@ offline.
 
 ## Quickstart
 
-1. Click the green **Code ▸ Download ZIP** above (or `git clone` this repo), and
-   unzip it.
-2. Install **[Python 3](https://python.org)** and
-   **[ImageMagick](https://imagemagick.org)** (tick *"Add to PATH"* in the Windows
-   installer).
-3. Launch the studio: double-click **`screensaver.bat`** (Windows) or
-   **`screensaver.command`** (macOS) — or run `python screensaver.py`.
-4. Drag in a photo, pick a style, get an instant preview. Then see
+No command line needed:
+
+1. Click the green **Code ▸ Download ZIP** button above and unzip it.
+2. Double-click **`screensaver.bat`** (Windows) or **`screensaver.command`**
+   (macOS).
+3. Drag a photo into the window, pick a style, get an instant preview.
+4. Copy the result onto your reader — see
    [Putting them on your reader](#putting-them-on-your-reader).
 
-That's it for `bold`/`veil`/`skyline`/`full`. The `subject` cutout needs a
-one-time `setup_subject` (see [Requirements](#requirements)).
+**Don't have Python or ImageMagick?** You don't have to install anything by
+hand. The first time you run it, the tool checks for them and offers to install
+them for you — just say *yes*:
 
-> **Missing Python or ImageMagick?** The launchers help: if Python is missing
-> they offer to install it (winget on Windows, Homebrew on macOS), and if
-> ImageMagick is missing the studio offers a one-key install on first run.
+- **Python** — if it's missing, the launcher installs it (winget on Windows,
+  Homebrew on macOS). After it installs, close the window and double-click the
+  launcher again.
+- **ImageMagick** — if it's missing, the studio offers a one-key install on
+  first run.
+
+The default styles (`bold`/`veil`/`skyline`/`full`) need nothing else. Only the
+optional `subject` cutout needs a one-time `setup_subject` step — see
+[Requirements](#requirements).
 
 ## Why
 
 E-ink screensavers are usually full, opaque images. The fun trick KOReader
-allows is **"Leave screen unchanged"** as the sleep background: it doesn't blank
-the page, so a partly-transparent PNG layers *over your book*. A silhouette
-skyline, a faded sunset, a cut-out portrait — drifting over the last paragraph
-you read.
+allows is setting the sleep-screen fill to **"No fill"**: it doesn't blank the
+page, so a partly-transparent PNG layers *over your book*. A silhouette skyline,
+a faded sunset, a cut-out portrait — drifting over the last paragraph you read.
 
 ## Styles
 
